@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-9');
+@import '@fontsource/inter';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-background text-foreground font-inter;
+}
