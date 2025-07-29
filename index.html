@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConvAI – Meetings. Transformed by AI.</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Extend Tailwind config for custom font
+    tailwind.config = {
+      theme: {
+        fontFamily: {
+          sans: ["Inter", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Heroicons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><rect width='128' height='128' rx='20' fill='%23000'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-family='Inter' font-size='72' fill='%23fff'>C</text></svg>" />
+
+  <style>
+    /* Custom scrollbar for premium feel */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 9999px; }
+  </style>
+</head>
+<body class="bg-black text-white font-sans antialiased leading-relaxed">
+  <!-- Visitor Counter -->
+  <div id="visitor-count" class="fixed bottom-4 right-4 flex items-center gap-1 text-sm text-gray-400">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12A3 3 0 119 12a3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+    <span id="visit-number">—</span>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+    <h1 class="text-4xl sm:text-6xl font-semibold mb-6">Meetings. <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-gray-100">Transformed by AI.</span></h1>
+    <p class="max-w-2xl text-gray-400 text-lg sm:text-xl mb-10">ConvAI captures, organizes, and understands your team conversations in real-time.</p>
+    <button id="cta-btn" class="bg-white text-black px-8 py-4 rounded-full text-lg font-medium hover:scale-105 hover:shadow-xl transition-all">Join In / Interested</button>
+  </section>
+
+  <!-- VISUAL SECTION 1 -->
+  <section class="w-full">
+    <img src="https://images.unsplash.com/photo-1602087568356-3c02d206a37c?auto=format&fit=crop&w=2850&q=80" alt="Virtual meeting" class="w-full object-cover h-[60vh] opacity-80" />
+  </section>
+
+  <!-- VISUAL SECTION 2 -->
+  <section class="w-full">
+    <img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=2850&q=80" alt="AI summarized notes" class="w-full object-cover h-[60vh] opacity-80" />
+  </section>
+
+  <!-- VISUAL SECTION 3 (optional animated gif or third image) -->
+  <section class="w-full">
+    <img src="https://images.unsplash.com/photo-1593642532973-d31b6557fa68?auto=format&fit=crop&w=2850&q=80" alt="Real-time transcription" class="w-full object-cover h-[60vh] opacity-80" />
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-12 text-center text-sm text-gray-500">
+    © <span id="year"></span> ConvAI. All rights reserved.
+  </footer>
+
+  <!-- FEEDBACK MODAL -->
+  <div id="feedback-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center px-4 hidden">
+    <div class="bg-white text-black rounded-xl w-full max-w-lg p-8 relative">
+      <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800" aria-label="Close">
+        ✕
+      </button>
+      <h2 class="text-2xl font-semibold mb-4">We're glad you're interested! 👋</h2>
+      <p class="mb-6 text-gray-600">Tell us a bit more so we can build an assistant that fits your needs.</p>
+      <form id="feedback-form" class="space-y-4">
+        <div>
+          <label class="block text-sm mb-1" for="name">Name (optional)</label>
+          <input id="name" name="name" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black/80" />
+        </div>
+        <div>
+          <label class="block text-sm mb-1" for="email">Email (optional)</label>
+          <input id="email" name="email" type="email" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black/80" />
+        </div>
+        <div>
+          <label class="block text-sm mb-1" for="help">What do you want this AI to help with?</label>
+          <textarea id="help" name="help" rows="3" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black/80"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm mb-1" for="use">Would you use ConvAI when launched?</label>
+          <select id="use" name="use" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black/80">
+            <option value="" disabled selected>Select an option</option>
+            <option value="Yes">Yes</option>
+            <option value="Maybe">Maybe</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm mb-1" for="suggestions">Suggestions or desired features</label>
+          <textarea id="suggestions" name="suggestions" rows="3" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black/80"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-black text-white py-3 rounded-md hover:bg-gray-900 transition-colors">Submit Feedback</button>
+      </form>
+      <div id="form-success" class="hidden flex flex-col items-center justify-center py-12">
+        <svg class="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path></svg>
+        <p class="text-lg font-medium">Thank you for your response!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    /* -------- Firebase Setup (Replace with your own config) -------- */
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      databaseURL: "YOUR_DATABASE_URL",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    /* -------- Visitor Counter -------- */
+    const visitRef = db.ref('visits');
+    visitRef.transaction(current => (current || 0) + 1);
+
+    visitRef.on('value', snapshot => {
+      document.getElementById('visit-number').textContent = snapshot.val().toLocaleString();
+    });
+
+    /* -------- CTA Button Logic -------- */
+    const ctaBtn = document.getElementById('cta-btn');
+    const feedbackModal = document.getElementById('feedback-modal');
+    const closeModal = document.getElementById('close-modal');
+    const feedbackForm = document.getElementById('feedback-form');
+    const formSuccess = document.getElementById('form-success');
+
+    ctaBtn.addEventListener('click', () => {
+      feedbackModal.classList.remove('hidden');
+    });
+
+    closeModal.addEventListener('click', () => {
+      feedbackModal.classList.add('hidden');
+      feedbackForm.classList.remove('hidden');
+      formSuccess.classList.add('hidden');
+      feedbackForm.reset();
+    });
+
+    /* -------- Feedback Form Submission -------- */
+    feedbackForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = {
+        name: e.target.name.value,
+        email: e.target.email.value,
+        help: e.target.help.value,
+        use: e.target.use.value,
+        suggestions: e.target.suggestions.value,
+        timestamp: Date.now(),
+      };
+
+      db.ref('feedback').push(formData).then(() => {
+        feedbackForm.classList.add('hidden');
+        formSuccess.classList.remove('hidden');
+      }).catch(err => {
+        alert('Error submitting feedback: ' + err.message);
+      });
+    });
+
+    /* -------- Dynamic Year -------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* -------- Feather Icons Init -------- */
+    feather.replace();
+  </script>
+</body>
+</html>
